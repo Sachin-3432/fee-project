@@ -1,0 +1,26 @@
+{
+  "name": "myfirstpack",
+  "version": "1.0.0",
+  "description": "Its my first web server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Sachin Goyal",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "express-fileupload": "^1.4.0",
+    "fs": "^0.0.1-security",
+    "http": "^0.0.1-security",
+    "multer": "^1.4.5-lts.1",
+    "mysql": "^2.18.1",
+    "nodemailer": "^6.9.1",
+    "nodemon": "^2.0.22",
+    "path": "^0.12.7",
+    "start": "^5.1.0",
+    "yarn.lock": "^0.0.1-security"
+  }
+}

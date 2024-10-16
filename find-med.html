@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Find Sellers Panel.</title>
+    <script src="script/angular.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+        crossorigin="anonymous"></script>
+    <link rel="icon" type="image/x-icon" href="pics/java.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+    <link rel="icon" type="image/x-icon" href="style/unnamed.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+    <style>
+        #color {
+            background-color: whitesmoke;
+        }
+
+        .btn {
+            width: 150px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 25px 25px 25px 25px;
+            transition: ease all .5s;
+            margin-right: 10px;
+            font-family: 'Segoe UI variable Display';
+        }
+
+        #btn2 {
+            width: 50px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 25px 25px 25px 25px;
+            transition: ease all .5s;
+            margin-right: 10px;
+            font-family: 'Segoe UI variable Display';
+        }
+
+        #pic {
+            background-image: url(style/95ab9d3dd7ac388e4caa8e6a836ac5d6.gif);
+            height: 150px;
+            width: 150px;
+            background-size: contain;
+            margin: auto;
+            margin-top: 10px;
+            background-repeat: no-repeat;
+        }
+
+        #pic2 {
+            background-image: url(style/14591dbbc4c695fd1177eba45bfabdc4.gif);
+            height: 150px;
+            width: 150px;
+            background-size: contain;
+            margin: auto;
+            margin-top: 10px;
+            background-repeat: no-repeat;
+        }
+
+        #waiting {
+            display: none;
+        }
+
+        label {
+            font-family: 'Segoe UI variable Display';
+            color: #ffc107;
+            font-size: 20px;
+            font-style: bold;
+        }
+
+
+        input[type="text"],
+        input[type="password"] {
+            line-height: 60px;
+            /* width: 500px; */
+            color: lightpink;
+            font-family: 'Segoe UI variable Display';
+            font-size: 18px;
+            border: 1px #ffc107 solid;
+            outline: none;
+            font-style: bold;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            color: lightpink;
+            font-family: 'Segoe UI variable Display';
+            font-size: 18px;
+
+        }
+
+        #txtType {
+            color: lightpink;
+            font-family: 'Segoe UI variable Display';
+            font-size: 20px;
+            border: 1px #ffc107 solid;
+            background-color: whitesmoke;
+            /* background-color: whitesmoke; */
+        }
+
+        #txttable {
+            font-family: 'Segoe UI variable Display';
+            font-size: 18px;
+            border: 1px #ffc107 solid;
+        }
+
+        .user {
+            background-image: url(pics/user.png);
+            background-repeat: no-repeat;
+            background-position: center left;
+        }
+
+        .err {
+            float: right;
+        }
+
+        .errL {
+            float: right;
+        }
+
+        .ok {
+            background-color: greenyellow;
+        }
+
+        .not-ok {
+            background-color: red;
+        }
+
+        .ok-pic {
+            background-image: url(pics/ok.png);
+            height: 30px;
+            width: 30px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            margin-top: 7px;
+        }
+
+        .not-ok-pic {
+            background-image: url(pics/notok.png);
+            height: 30px;
+            width: 30px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            margin-top: 7px;
+        }
+
+        #brand {
+            font-family: 'Malgun Gothic';
+        }
+
+        #border2 {
+            border: 3px red solid;
+        }
+
+        #border3 {
+            border: 3px whitesmoke solid;
+        }
+
+        #border4 {
+            border: 3px #ffc107 solid;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #ffc107;
+        }
+
+        body {
+            background: linear-gradient(to right, whitesmoke, whitesmoke, #ffc107);
+        }
+    </style>
+    <script>
+        var module = angular.module("myModule", []);
+        module.controller("myController", function ($scope, $http) {
+
+            $scope.JsonArr;
+            $scope.JsonArr2;
+
+            $scope.fetchCity = function () {
+
+                var url = "/fetch-city";
+                $http.get(url).then(done, fail);
+                function done(response) {
+                    // alert(JSON.stringify(response.data));
+                    $scope.JsonArr = response.data;
+                }
+                function fail(response) {
+                    alert(response.data);
+                }
+            }
+
+            $scope.fetchMeds = function () {
+                var url = "/fetch-med";
+                $http.get(url).then(done, fail);
+                function done(response) {
+                    // alert(JSON.stringify(response.data));
+                    $scope.JsonArr2 = response.data;
+                }
+                function fail(response) {
+                    alert(response.data);
+                }
+            }
+
+            $scope.doShow = function () {
+                alert($scope.selcity.city);
+            }
+
+            $scope.doShowAll = function () {
+                alert($scope.selmed.med);
+            }
+
+            $scope.fetchDonors = function () {
+                var url = "/fetch-donors?medKuch=" + $scope.selmed.med + "&cityKuch=" + $scope.selcity.city;
+                $http.get(url).then(done, fail);
+                function done(response) {
+                    // alert(JSON.stringify(response.data));
+                    $scope.JsonArr3 = response.data;
+                }
+                function fail(response) {
+                    alert(response.data);
+                }
+            }
+
+            $scope.fetchallDetails = function () {
+                var url = "/angular-get-all-details";
+                $http.get(url).then(successFxKuch, failFxKuch);
+
+                function successFxKuch(responseKuch) {
+                    //alert( JSON.stringify(responseKuch.data));
+                    $scope.jsonAry = responseKuch.data;
+                }
+                function failFxKuch(responseKuch) {
+                    alert(responseKuch.data);
+                }
+            }
+
+            $scope.arr = [];
+            $scope.fetch = function () {
+                var url = "/fetch-vill";
+                $http.get(url).then(pass, fail);
+                function pass(resp) {
+                    $scope.emailsAry = resp.data;
+                }
+                function fail(resp) {
+                    alert(resp.data);
+                }
+            }
+
+            $scope.selObj;
+            $scope.doShowOne = function (selIndex) {
+                $scope.selOneObj = $scope.JsonArr3[selIndex];
+            }
+        })
+    </script>
+
+<body id="color" ng-app="myModule" ng-controller="myController" ng-init="fetchCity();fetchMeds();fetchallDetails();">
+    <nav class="navbar bg-warning" id=border2>
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="style/unnamed.png" id="border3" alt="Bootstrap" width="170" height="150">
+            </a>
+            <nav class="navbar navbar-expand-lg bg-body-danger">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">
+                        <font color="whitesmoke" size="20">
+                            Find Sellers Panel.</font>
+
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <form class="d-flex" role="search">
+                            </form>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </nav>
+
+    <center>
+        <font color="#ffc107">
+            <br>
+
+
+            <h2>Select City :-</h2>
+            <div class="col-md-10">
+                <select ng-options="obj.city for obj in JsonArr" id="txtType" ng-model="selcity">
+                    <option value="">Open the Select Menu </option>
+                </select>
+            </div>
+            <br>
+            <hr>
+
+
+            <h2>Select Product :-</h2>
+            <select id="txtType" ng-options="obj.med for obj in JsonArr2" ng-model="selmed">
+                <option value="">Open the Select Menu</option>
+            </select>
+            <br><br>
+            <hr>
+
+            <input type="button" value="Fetch Sellers" class="btn btn-outline-danger" ng-click="fetchDonors();">
+            <br>
+            <hr>
+        </font>
+    </center>
+
+    <font color="lightpink">
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-3" ng-repeat="obj in JsonArr3">
+                    <div class="card" id="border4">
+                        <!-- <img src="uploads/{{obj.ppic}}" class="card-img-top" alt="..."> -->
+                        <center> <img src="style/unnamed (5).png" width="150" height="150" class="card mt-2" alt="...">
+                            <div class="card-body mt-2" id="txtType">
+                                <h5 class="card-text">
+                                    <font color="#ffc107">Seller Name :- </font>{{obj.name}}.
+                                </h5>
+                                <p class="card-text">
+                                    <font color="#ffc107">Product Name :- </font>{{obj.med}}.
+                                </p>
+                                <p class="card-text">
+                                    <font color="#ffc107">Address:- </font>{{obj.address}}.
+                                </p>
+                                <p class="card-text">
+                                    <font color="#ffc107">City :- </font>{{obj.city}}.
+                                </p>
+                                <p class="card-text">
+                                    <font color="#ffc107">Asked Price :- </font>{{obj.price}}.
+                                </p>
+                                <a href="#" class="btn btn-outline-danger" data-bs-toggle="modal"
+                                    data-bs-target="#modalDetails" ng-click="doShowOne($index);">More Details</a>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </font>
+    <br>
+    <br>
+    <br>
+
+    <center>
+        <font color="#ffc107">
+            <div class="modal fade" id="modalDetails" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header" id="color">
+                            <font size="20">
+
+                                <head class="modal-title fs-10" size="10" id="staticBackdropLabel">{{selOneObj.name}}
+                            </font>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="txtType">
+                            <p><img src="uploads/{{selOneObj.pic}}" width="100" height="100"></p>
+                            <p class="modal-text">
+                                <font color="#ffc107">Email ID :- </font>{{selOneObj.email}}.<br>
+                            <p class="modal-text">
+                                <font color="#ffc107">Medicine Name :- </font>{{selOneObj.med}}.<br>
+                            <p class="modal-text">
+                                <font color="#ffc107">Contact No. :- </font>{{selOneObj.mobile}}.<br>
+                            <p class="modal-text">
+                                <font color="#ffc107">Address :- </font>{{selOneObj.address}}.<br>
+                            <p class="modal-text">
+                                <font color="#ffc107">City :- </font>{{selOneObj.city}}.<br>
+                            <p class="modal-text">
+                                <font color="#ffc107">Asked Price :- </font>{{selOneObj.price}}.<br>
+                            <p class="modal-text">
+                                <font color="#ffc107">Availability Hours :- </font>{{selOneObj.ahours}}
+                                hrs-{{selOneObj.bhours}} hrs.<br>
+                        </div>
+                        <div class="modal-footer" id="color">
+                            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </font>
+
+    </center>
+
+
+</body>
+
+</html>

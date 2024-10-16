@@ -1,0 +1,91 @@
+body {
+    /* background-color: lightblue;
+    color: darkblue;
+    background-image: var(--bs-gradient); */
+    background-image: url(style/Shark-tank.jpeg);
+    background-size: contain;
+    /* background-repeat: no-repeat; */
+
+}
+
+
+
+.btn {
+    width: 150px;
+    padding: 12px;
+    background-color: red;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    border: 2px lightcyan solid;
+    border-radius: 35px 35px 35px 35px;
+    /* border-radius: 20%; */
+    transition: ease all .5s;
+    margin-top: 30px;
+    margin-left: 100px;
+}
+    
+.btn2 {
+    width: 150px;
+    padding: 15px;
+    background-color: red;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    border: 2px lightcyan solid;
+    border-radius: 35px 35px 35px 35px;
+    /* border-radius: 20%; */
+    transition: ease all .5s;
+    margin-top: 30px;
+    margin-left: 100px;
+}
+
+.btn-tom {
+    background-color: tomato;
+}
+
+.btn-ora {
+    background-color: orange;
+}
+
+
+.btn:hover {
+    background-color: aqua;
+    color: royalblue;
+    border-radius: 15px 15px 15px 15px;
+    transition: ease all .5s;
+    border-radius: 35px 35px 35px 35px;
+}
+
+.btn2:hover {
+    background-color: aqua;
+    color: royalblue;
+    border-radius: 15px 15px 15px 15px;
+    transition: ease all .5s;
+    border-radius: 35px 35px 35px 35px;
+}
+
+.btn:active {
+    translate: 0px 5px;
+}
+
+.btn2:active {
+    translate: 0px 5px;
+}
+
+/* a,b,i,u
+{
+    background-color:royalblue;
+    border: 1px yellow double;
+    padding: 5px;
+    width:70px;
+} */
+#spl-btn {
+    background-color: wheat;
+    border: 1px black solid;
+    color: white;
+    padding: 5 px;
+    width: 70px;
+}

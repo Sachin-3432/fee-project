@@ -1,0 +1,571 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Donor Profile Form.</title>
+    <link rel="icon" type="image/x-icon" href="pics/java.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+    <script>
+        function doPrev(refFile, prevImg) {
+            const [file] = refFile.files
+            if (file) {
+                prevImg.src = URL.createObjectURL(file)
+            }
+        }
+
+        $(document).ready(function () {
+            $("#btnSearch").click(function () {
+                var myKuchEmail = $("#txtEmail").val();
+
+                var obj = {
+                    type: "get",
+                    url: "/json-get-profile",
+                    data: {
+                        kuchEmail: myKuchEmail,
+                    }
+                }
+
+                $.ajax(obj).done(function (respJsonAry) {
+                    alert(JSON.stringify(respJsonAry));
+
+                    if (respJsonAry.length == 0) {
+                        alert("Invalid ID");
+                        document.querySelector("#btnSubmit").disabled = false;
+                    }
+                    else {
+                        $("#txtName").val(respJsonAry[0].name);
+                        $("#txtMobile").val(respJsonAry[0].mobile);
+                        $("#txtAddress").val(respJsonAry[0].address);
+                        $("#txtCity").val(respJsonAry[0].city);
+                        $("#txtID").val(respJsonAry[0].idproof);
+                        $("#txtHours").val(respJsonAry[0].ahours);
+                        $("#txtHour").val(respJsonAry[0].bhours);
+                        alert(respJsonAry[0].dob);
+                        $("#txtDate").val(respJsonAry[0].dob);
+                        // alert(respJsonAry[0].pname);
+
+                        $("#hdn").val(respJsonAry[0].pic);
+                        $("#prev").prop("src", "uploads/" + respJsonAry[0].pic);
+                        document.querySelector("#btnRes").disabled = false;
+                    }
+                }).fail(function (kuchErr) {
+                    alert(kuchErr.toString());
+                });
+            })
+
+            function setActiveUser() {
+                var au = localStorage.getItem("activeKuch");
+                $("#txtEmail").val(au).prop("readonly", true);
+            }
+
+            setActiveUser();
+        })
+
+
+    </script>
+    <style>
+        body {
+            background-color: whitesmoke;
+        }
+
+        .btn {
+            width: 150px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 25px 25px 25px 25px;
+            transition: ease all .5s;
+            margin-right: 10px;
+            font-family: 'Segoe UI variable Display';
+        }
+
+
+        input[type="text"],
+        input[type="password"],
+        input[type="date"],
+        input[type="file"],
+        input[type="email"],
+        input[type="number"],
+        input[type="time"] {
+            /* line-height: 40px; */
+            /* width: 500px; */
+            color: lightpink;
+            font-family: 'Segoe UI variable Display';
+            font-size: 18px;
+            border: 1px #ffc107 solid;
+            outline: none;
+            font-style: bold;
+            /* margin-left: 40px; */
+            /* text-align: center; */
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus,
+        input[type="date"]:focus,
+        input[type="number"]:focus,
+        input[type="email"]:focus,
+        input[type="time"]:focus,
+        input[type="file"]:focus {
+            /* background-color: gold; */
+            /* text-align: center;
+             */
+            color: lightpink;
+            font-family: 'Segoe UI variable Display';
+            font-size: 18px;
+
+        }
+
+        #txtType {
+            color: lightpink;
+            font-family: 'Segoe UI variable Display';
+            font-size: 18px;
+            border: 1px #ffc107 solid;
+        }
+
+        #ppic {
+            border: 1px #ffc107 solid;
+        }
+
+        #txtID {
+            color: lightpink;
+            font-family: 'Segoe UI variable Display';
+            font-size: 18px;
+            border: 1px #ffc107 solid;
+        }
+
+        .user {
+            background-image: url(pics/user.png);
+            background-repeat: no-repeat;
+            background-position: center left;
+        }
+
+        label {
+            /* float: left; */
+            font-family: 'Segoe UI variable Display';
+            color: #ffc107;
+            font-size: 20px;
+            font-style: bold;
+
+        }
+
+        .img {
+            border-radius: 10px;
+            border: 5px lightpink solid;
+        }
+
+        #pic {
+            text-align: right;
+        }
+
+        #txtHours {
+            /* line-height: 10px; */
+            width: 150px;
+            color: lightpink;
+            font-family: 'Segoe UI variable Display';
+            font-size: 18px;
+            border: 1px #ffc107 solid;
+        }
+
+        #txtHour {
+            /* line-height: 10px; */
+            width: 150px;
+            color: lightpink;
+            font-family: 'Segoe UI variable Display';
+            font-size: 18px;
+            border: 1px #ffc107 solid;
+        }
+
+        #border2 {
+            border: 3px red solid;
+        }
+
+        #border3 {
+            border: 3px whitesmoke solid;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar bg-warning" id="border2">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="pics/Online-Product-Auction-System (1).jpg" id="border3" alt="Bootstrap" width="170"
+                    height="100">
+            </a>
+            <nav class="navbar navbar-expand-lg bg-body-danger">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">
+                        <font color="whitesmoke" size="20">
+                            Products Available.</font>
+
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <form class="d-flex" role="search">
+
+
+
+
+
+                            </form>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </nav>
+    <center>
+        <div class="card text">
+            <!-- <img src="style/qqewvtn1.png" class="card-img-overlay" height="" width="" alt="..."> -->
+            <div id="pic">
+                <div class="card-img-overlay">
+                    <font color="#ffc107">
+                        <center>
+                            <br><br><br>
+                            <img src="pics/OIP.jpg" class="img" id="border" height="400" width="600" alt="...">
+                            <br><br><br><br><br><br>
+                            <div class="container">
+                                <div class="row">
+                                    <form method="post" enctype="multipart/form-data">
+                                        <input type="hidden" name="hdn" id="hdn">
+                                        <div class="col-md-8">
+                                            <div class="form-floating mb-3">
+                                                <input type="text" class="form-control" name="txtAmt" id="txtAmt"
+                                                    value="1,15,00,000" placeholder="Your Email Plz." required disabled>
+                                                <label for="floatingInput">Amount Asked.</label>
+                                            </div>
+
+                                            <br><br>
+
+                                            <div class="form-floating mb-3">
+                                                <input type="number" class="form-control" name="txtAmt2" id="txtAmt2"
+                                                    value="" placeholder="Your Email Plz." required>
+                                                <label for="floatingInput">Enter Amount You Want to Bid.</label>
+                                            </div>
+
+                                            <br><br>
+
+
+                                            <div class="modal-footer" id="color">
+                                                <br><br>
+                                                <center>
+                                                    <button type="button"
+                                                        class="btn btn-outline-danger">Submit.</button>
+                                                </center>
+                                                <hr>
+                                                <br><br><br><br>
+                                                <center>
+
+                                    </form>
+                                </div>
+
+                                <br><br><br><br><br>
+                                <img src="style/1267931-rolls-royce-droptaillarosenoire-2024-front.webp" class="img"
+                                    id="border" height="400" width="600" alt="...">
+                                <br><br><br><br><br><br>
+                                <div class="container">
+                                    <div class="row">
+                                        <form method="post" enctype="multipart/form-data">
+                                            <input type="hidden" name="hdn" id="hdn">
+                                            <div class="col-md-12">
+                                                <div class="form-floating mb-3">
+                                                    <input type="text" class="form-control" name="txtAmt" id="txtAmt"
+                                                        value="215,15,00,000" placeholder="Your Email Plz." required
+                                                        disabled>
+                                                    <label for="floatingInput">Amount Asked.</label>
+                                                </div>
+
+                                                <br><br>
+
+                                                <div class="form-floating mb-3">
+                                                    <input type="number" class="form-control" name="txtAmt2"
+                                                        id="txtAmt2" value="" placeholder="Your Email Plz." required>
+                                                    <label for="floatingInput">Enter Amount You Want to Bid.</label>
+                                                </div>
+
+                                                <br><br>
+
+
+                                                <div class="modal-footer" id="color">
+                                                    <br><br>
+                                                    <center>
+                                                        <button type="button"
+                                                            class="btn btn-outline-danger">Submit.</button>
+                                                    </center>
+                                                    <hr>
+                                                    <br><br><br><br>
+                                                    <center>
+
+
+
+                                        </form>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </center>
+                    </font>
+                    <br><br><br><br><br>
+                    <center>
+                        <img src="pics/Royal-Enfield-Classic-350-Gunmetal-Grey-4.jpg" class="img" id="border"
+                            height="400" width="600" alt="...">
+                        <br><br><br><br><br><br>
+                        <div class="container">
+                            <div class="row">
+                                <form method="post" enctype="multipart/form-data">
+                                    <input type="hidden" name="hdn" id="hdn">
+                                    <div class="col-md-8">
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" name="txtAmt" id="txtAmt"
+                                                value="5,15,000" placeholder="Your Email Plz." required disabled>
+                                            <label for="floatingInput">Amount Asked.</label>
+                                        </div>
+
+                                        <br><br>
+
+                                        <div class="form-floating mb-3">
+                                            <input type="number" class="form-control" name="txtAmt2" id="txtAmt2"
+                                                value="" placeholder="Your Email Plz." required>
+                                            <label for="floatingInput">Enter Amount You Want to Bid.</label>
+                                        </div>
+
+                                        <br><br>
+
+
+                                        <div class="modal-footer" id="color">
+                                            <br><br>
+                                            <center>
+                                                <button type="button" class="btn btn-outline-danger">Submit.</button>
+                                            </center>
+                                            <hr>
+                                            <br><br><br><br>
+
+
+                                </form>
+                            </div>
+                            <br><br><br><br><br>
+                            <center>
+                                <img src="pics/OIP (2).jpg" class="img" id="border" height="400" width="600" alt="...">
+                                <br><br><br><br><br><br>
+                                <div class="container">
+                                    <div class="row">
+                                        <form method="post" enctype="multipart/form-data">
+                                            <input type="hidden" name="hdn" id="hdn">
+                                            <div class="col-md-12">
+                                                <div class="form-floating mb-3">
+                                                    <input type="text" class="form-control" name="txtAmt" id="txtAmt"
+                                                        value="1,15,000" placeholder="Your Email Plz." required
+                                                        disabled>
+                                                    <label for="floatingInput">Amount Asked.</label>
+                                                </div>
+
+                                                <br><br>
+
+                                                <div class="form-floating mb-3">
+                                                    <input type="number" class="form-control" name="txtAmt2"
+                                                        id="txtAmt2" value="" placeholder="Your Email Plz." required>
+                                                    <label for="floatingInput">Enter Amount You Want to Bid.</label>
+                                                </div>
+
+                                                <br><br>
+
+
+                                                <div class="modal-footer" id="color">
+                                                    <br><br>
+                                                    <center>
+                                                        <button type="button"
+                                                            class="btn btn-outline-danger">Submit.</button>
+                                                    </center>
+                                                    <hr>
+                                                    <br><br><br><br>
+
+
+                                        </form>
+                                    </div>
+
+                                </div>
+                                <br><br><br><br><br>
+                                <center>
+                                    <div class="container">
+
+                                        </form>
+                                    </div>
+
+                        </div>
+
+                </div>
+                <br><br><br><br><br>
+                <center>
+                    <img src="pics/antique.webp" class="img" id="border" height="400" width="600" alt="...">
+                    <br><br><br><br><br><br>
+                    <div class="container">
+                        <div class="row">
+                            <form method="post" enctype="multipart/form-data">
+                                <input type="hidden" name="hdn" id="hdn">
+                                <div class="col-md-12">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" name="txtAmt" id="txtAmt"
+                                            value="1,15,00,000" placeholder="Your Email Plz." required disabled>
+                                        <label for="floatingInput">Amount Asked.</label>
+                                    </div>
+
+                                    <br><br>
+
+                                    <div class="form-floating mb-3">
+                                        <input type="number" class="form-control" name="txtAmt2" id="txtAmt2" value=""
+                                            placeholder="Your Email Plz." required>
+                                        <label for="floatingInput">Enter Amount You Want to Bid.</label>
+                                    </div>
+
+                                    <br><br>
+
+
+                                    <div class="modal-footer" id="color">
+                                        <br><br>
+                                        <center>
+                                            <button type="button" class="btn btn-outline-danger">Submit.</button>
+                                        </center>
+                                        <hr>
+                                        <br><br><br><br>
+
+
+                            </form>
+                        </div>
+                        <br><br><br><br><br>
+                        <center>
+                            <img src="pics/samsung.webp" class="img" id="border"
+                                height="400" width="600" alt="...">
+                            <br><br><br><br><br><br>
+                            <div class="container">
+                                <div class="row">
+                                    <form method="post" enctype="multipart/form-data">
+                                        <input type="hidden" name="hdn" id="hdn">
+                                        <div class="col-md-12">
+                                            <div class="form-floating mb-3">
+                                                <input type="text" class="form-control" name="txtAmt" id="txtAmt"
+                                                    value="10,15,000" placeholder="Your Email Plz." required disabled>
+                                                <label for="floatingInput">Amount Asked.</label>
+                                            </div>
+    
+                                            <br><br>
+    
+                                            <div class="form-floating mb-3">
+                                                <input type="number" class="form-control" name="txtAmt2" id="txtAmt2"
+                                                    value="" placeholder="Your Email Plz." required>
+                                                <label for="floatingInput">Enter Amount You Want to Bid.</label>
+                                            </div>
+    
+                                            <br><br>
+    
+    
+                                            <div class="modal-footer" id="color">
+                                                <br><br>
+                                                <center>
+                                                    <button type="button" class="btn btn-outline-danger">Submit.</button>
+                                                </center>
+                                                <hr>
+                                                <br><br><br><br>
+    
+    
+                                    </form>
+                                </div>
+                                <br><br><br><br><br>
+                                <center>
+                                    <img src="pics/marshall.webp" class="img" id="border"
+                                        height="400" width="600" alt="...">
+                                    <br><br><br><br><br><br>
+                                    <div class="container">
+                                        <div class="row">
+                                            <form method="post" enctype="multipart/form-data">
+                                                <input type="hidden" name="hdn" id="hdn">
+                                                <div class="col-md-12">
+                                                    <div class="form-floating mb-3">
+                                                        <input type="text" class="form-control" name="txtAmt" id="txtAmt"
+                                                            value="3,15,000" placeholder="Your Email Plz." required disabled>
+                                                        <label for="floatingInput">Amount Asked.</label>
+                                                    </div>
+            
+                                                    <br><br>
+            
+                                                    <div class="form-floating mb-3">
+                                                        <input type="number" class="form-control" name="txtAmt2" id="txtAmt2"
+                                                            value="" placeholder="Your Email Plz." required>
+                                                        <label for="floatingInput">Enter Amount You Want to Bid.</label>
+                                                    </div>
+            
+                                                    <br><br>
+            
+            
+                                                    <div class="modal-footer" id="color">
+                                                        <br><br>
+                                                        <center>
+                                                            <button type="button" class="btn btn-outline-danger">Submit.</button>
+                                                        </center>
+                                                        <hr>
+                                                        <br><br><br><br>
+            
+            
+                                            </form>
+                                        </div>
+                  
+                                    </div>
+            
+                            </div>
+    
+                    </div>
+
+            </div>
+
+
+        </div>
+
+    </center>
+
+    </center>
+    <br><br><br><br><br><br>
+    </div>
+    </div>
+    </div>
+    </center>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+</body>
+
+</font>
+</div>
+</div>
+</center>
+
+</html>

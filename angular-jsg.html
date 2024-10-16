@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+    <script src="script/angular.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+        crossorigin="anonymous"></script>
+
+    <script>
+
+        var myModules = angular.module("myModule", []);
+
+        myModules.controller("myController", function ($scope, $http) {
+            $scope.fn = "Sachin";
+            $scope.ln;
+
+            $scope.technologies = ["C++", "Java", "Web", "DSA", "ReactJS"];
+            $scope.doJoin = function () {
+                $scope.full = $scope.fn + " " + $scope.ln;
+            }
+
+             $scope.jsonAry=[
+                {emailid:'aman@gmail.com',pwd:'ahsdhsd',mobile:'737337'},
+                {emailid:'rman@gmail.com',pwd:'ahsdhsd',mobile:'737337'},
+                {emailid:'chman@gmail.com',pwd:'ahsdhsd',mobile:'737337'},
+                {emailid:'daman@gmail.com',pwd:'ahsdhsd',mobile:'737337'},
+                {emailid:'gaman@gmail.com',pwd:'ahsdhsd',mobile:'737337'}
+            ];   
+
+
+
+            $scope.selTech;
+            $scope.doShow = function () {
+                alert($scope.selTech)
+            }
+
+            $scope.doDelete = function (mid) {
+                var resp = confirm("Are you Sure??");
+
+                if (resp == false)
+                    return;
+
+
+                var url = "/angular-delete-user?x=" + mid;
+                $http.get(url).then(successFxKuch, failFxKuch);
+
+                function successFxKuch(responseKuch) {
+                    alert(responseKuch.data);
+                    $scope.doShowAll();
+
+                }
+                function failFxKuch(responseKuch) {
+                    alert(responseKuch.data);
+                }
+            }
+
+            $scope.jsonAry = [];
+            $scope.doShowAll = function () {
+                alert($scope.selEmailObj.email);
+                var url = "/angular-get-all-users";
+                $http.get(url).then(successFxKuch, failFxKuch);
+
+                function successFxKuch(responseKuch) {
+                    //alert( JSON.stringify(responseKuch.data));
+                    $scope.jsonAry = responseKuch.data;
+                }
+                function failFxKuch(responseKuch) {
+                    alert(responseKuch.data);
+                }
+            }
+
+            $scope.arr = [];
+            $scope.fetch = function () {
+                var url = "/fetch-city";
+                $http.get(url).then(pass, fail);
+                function pass(resp) {
+                    $scope.emailsAry = resp.data;
+                }
+                function fail(resp) {
+                    alert(resp.data);
+                }
+            }
+
+            $scope.doShow = function () {
+                alert($scope.selEmailObj.email);
+            }
+        });
+
+    </script>
+</head>
+
+<body ng-app="myModule" ng-controller="myController" ng-init="fetch();">
+    {{fn}}
+    <br> <br>
+    F.Name <input type="text" ng-model="fn">
+    <br>
+    <br>
+    <p>
+        L.Name <input type="text" ng-model="ln">
+    </p>
+    <p>
+        <center>
+            <input type="button" value="Join" ng-click="doJoin();">
+        </center>
+    </p>
+    <p>
+        {{full}}
+        <br>
+        Full <input type="text" ng-model="full">
+    </p>
+    <hr>
+    Select Technology:
+    <select ng-change="doShow();" ng-model="selTech">
+        <option ng-repeat="str in technologies">{{str}}</option>
+    </select>
+    <hr>
+    <center>
+
+        <hr>
+        All Email Ids:
+        <select ng-options="obj.email for obj in emailsAry" ng-model="selEmailObj" ng-change="doShow();">
+            <option value="">Select</option>
+        </select>
+        <hr>
+
+        <br>
+        <input type="button" value="Fetch All" ng-click="doShowAll();">
+        <br>
+        <br>
+        <h2>All Users</h2>
+        <br>
+        <table width="600" border=2>
+            <tr>
+                <th>Sr. No</th>
+                <th>Email ID</th>
+                <th>Password</th>
+                <th>Date of Signup</th>
+                <th>Action</th>
+            </tr>
+            <tr ng-repeat="obj in jsonAry">
+                <th>{{$index+1}}</th>
+                <td>
+                    {{obj.email}}
+                </td>
+                <td>
+                    {{obj.password}}
+                </td>
+                <td>
+                    {{obj.dos}}
+                </td>
+                <th>
+                    <a href="#" ng-click="doDelete(obj.email);">Delete</a>
+                </th>
+            </tr>
+        </table>
+
+        <hr>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3" ng-repeat="obj in jsonAry">
+                    <div class="card border border-danger border-2">
+                        <!-- <img src="uploads/{{obj.ppic}}" class="card-img-top" alt="..."> -->
+                        <center> <img src="ppics/modisaab.jpg" width="100" height="100" class="card" alt="..."></center>
+                        <div class="card-body">
+                            <h5 class="card-title">{{obj.email}}</h5>
+                            <p class="card-text">{{obj.password}}</p>
+                            <p class="card-text">{{obj.dos}}</p>
+                            <a href="#" class="btn btn-outline-warning" data-bs-toggle="modal"
+                                data-bs-target="#details">Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </center>
+
+    <div ng-repeat="obj in arr">{{obj.email}}</div>
+
+
+
+    <div class="modal fade" tabindex="-1" id="details">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Modal body text goes here.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

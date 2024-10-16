@@ -1,0 +1,941 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AUCTIFY.</title>
+    <link rel="icon" type="image/x-icon" href="style/unnamed.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <!-- <link rel="stylesheet" href="style/my-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"> -->
+
+    <script>
+
+        function doPrev(refFile, prevImg) {
+            const [file] = refFile.files
+            if (file) {
+                prevImg.src = URL.createObjectURL(file)
+            }
+        }
+        $(document).ready(function () {
+
+            $("#txtEmail").blur(function () {
+                var myKuchEmail = $("#txtEmail").val();
+
+                var obj = {
+                    type: "get",
+                    url: "/ajax-chk-user",
+                    data: {
+                        kuchEmail: myKuchEmail,
+                    }
+                }
+
+                $.ajax(obj).done(function (kuchResponse) {
+                    $("#result").html(kuchResponse);
+                }).fail(function (kuchErr) {
+                    // alert(kuchErr.toString());
+                    $("#result").html(kuchResponse);
+                });
+            });
+
+            $(document).ajaxStart(function () {
+                $("#waiting").css("display", "block");
+            });
+
+
+            $(document).ajaxStop(function () {
+                $("#waiting").css("display", "none");
+            });
+
+
+            $("#show").click(function () {
+                var emailKu = $("#txtEmail").val();
+                var pwd = $("#txtPassword").val();
+                var type1 = $("#txtType").val();
+
+                var obj = {
+                    type: "get",
+                    url: "/chk-submit",
+                    data: {
+                        kuchemail: emailKu,
+                        kuchpwd: pwd,
+                        kuchtype: type1
+                    }
+                }
+
+                $.ajax(obj).done(function (respkuch1) {
+                    $("#btn-submit").html(respkuch1);
+                }).fail(function (errkuch1) {
+                    // alert(kuchErr.toString());
+                    $("#btn-submit").html(errkuch1);
+                });
+            });
+
+            $("#update").click(function () {
+                var emailKu = $("#txtEmail").val();
+                var pwd = $("#txtPassword").val();
+                var type1 = $("#txtType").val();
+
+                var obj = {
+                    type: "get",
+                    url: "/chk-update",
+                    data: {
+                        kuchemail: emailKu,
+                        kuchpwd: pwd,
+                        kuchtype: type1
+                    }
+                }
+
+                $.ajax(obj).done(function (respkuch2) {
+                    $("#btn-update").html(respkuch2);
+                }).fail(function (errkuch2) {
+                    // alert(kuchErr.toString());
+                    $("#btn-update").html(errkuch2);
+                });
+            });
+
+            $("#btnSearch").click(function ()
+            // doSearch();
+            // function doSearch() 
+            {
+                var myKuchEmail = $("#txtEmail").val();
+                var obj = {
+                    type: "get",
+                    url: "/json-get-record",
+                    data: {
+                        kuchEmail: myKuchEmail
+                    }
+                }
+
+                $.ajax(obj).done(function (respJsonAry) {
+                    alert(JSON.stringify(respJsonAry))
+
+                    if (respJsonAry.length == 0)
+                        alert("Invalid ID");
+                    else {
+                        $("#txtPassword").val(respJsonAry[0].password);
+                        $("#txtType").val(respJsonAry[0].type);
+                        // alert(respJsonAry[0].dos);
+                    }
+
+
+                }).fail(function (kuchErr) {
+                    alert(kuchErr.toString());
+                });
+
+
+            });
+
+            $("#login").click(function () {
+                var emailKu = $("#txtEmailL").val();
+                var pwd = $("#txtPasswordL").val();
+
+                var obj = {
+                    type: "get",
+                    url: "/login-user",
+                    data: {
+                        kuchemail: emailKu,
+                        kuchpwd: pwd,
+                    }
+                }
+
+                $.ajax(obj).done(function (resp) {
+                    localStorage.setItem("activeKuch", $("#txtEmailL").val());
+                    if (resp == "Seller")
+                        location.href = "dash-donor.html";
+                    else
+                        if (resp == "Buyer")
+                            location.href = "dash-needy.html";
+                        else
+                            if (resp == "Admin")
+                                location.href = "dash-admin.html";
+                            else
+                                alert(resp);
+                }).fail(function (err) {
+                    $("#btn-login").html(err);
+                })
+
+
+            });
+
+            $("#txtEmail").blur(function () {
+                var exp = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+                var email = $("#txtEmail").val();
+
+                if (exp.test(email) == true) {
+                    $(this).removeClass("not-ok").addClass("ok");
+                    $("#errEmail").removeClass("not-ok-pic").addClass("ok-pic");
+                }
+                else {
+                    $(this).removeClass("ok").addClass("not-ok");
+                    $("#errEmail").removeClass("ok-pic").addClass("not-ok-pic");
+                    
+                }
+            });
+
+            $("#txtPassword").blur(function () {
+                var r = /(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
+                var password = $("#txtPassword").val();
+
+                if (r.test(password) == true) {
+                    $(this).removeClass("not-ok").addClass("ok");
+                    $("#errPassword").removeClass("not-ok-pic").addClass("ok-pic");
+                }
+
+                else {
+                    $(this).removeClass("ok").addClass("not-ok");
+                    $("#errPassword").removeClass("ok-pic").addClass("not-ok-pic");
+                    alert("Password must contain lowercase, uppercase, numbers and a special symbol");
+                }
+            });
+
+            $("#txtEmailL").blur(function () {
+                var e = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+                var emailL = $("#txtEmailL").val();
+
+                if (e.test(emailL) == true) {
+                    $(this).removeClass("not-ok").addClass("ok");
+                    $("#errEmailL").removeClass("not-ok-pic").addClass("ok-pic");
+                }
+                else {
+                    $(this).removeClass("ok").addClass("not-ok");
+                    $("#errEmailL").removeClass("ok-pic").addClass("not-ok-pic");
+                }
+            });
+
+
+            $("#txtPasswordL").blur(function () {
+                var rL = /(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
+                var passwordL = $("#txtPasswordL").val();
+
+                if (rL.test(passwordL) == true) {
+                    $(this).removeClass("not-ok").addClass("ok");
+                    $("#errPasswordL").removeClass("not-ok-pic").addClass("ok-pic");
+                }
+
+                else {
+                    $(this).removeClass("ok").addClass("not-ok");
+                    $("#errPasswordL").removeClass("ok-pic").addClass("not-ok-pic")
+                }
+            });
+
+        });
+
+
+    </script>
+
+
+    <style>
+        a {
+            color: red;
+            text-decoration: none;
+        }
+
+        body {
+            flex-wrap: wrap-reverse;
+            background: linear-gradient(to right, whitesmoke, #ffc107);
+        }
+
+        a:hover {
+            color: whitesmoke
+        }
+
+        #color {
+            background-color: whitesmoke;
+        }
+
+        .btn {
+            width: 150px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 25px 25px 25px 25px;
+            transition: ease all .5s;
+            margin-top: 8px;
+            margin-right: 10px;
+            font-family: 'Segoe UI variable Display';
+        }
+
+        #pic {
+            background-image: url(style/liz-gross-signup.gif);
+            height: 150px;
+            width: 150px;
+            background-size: contain;
+            margin: auto;
+            /* border-radius: 30%; */
+            margin-top: 10px;
+            background-repeat: no-repeat;
+            /* border: 2px #ffc107 solid; */
+        }
+
+        #copy-right {
+            text-align: right;
+        }
+
+        #pic2 {
+            background-image: url(style/14591dbbc4c695fd1177eba45bfabdc4.gif);
+            height: 150px;
+            width: 150px;
+            background-size: contain;
+            margin: auto;
+            /* border-radius: 30%; */
+            margin-top: 10px;
+            background-repeat: no-repeat;
+            /* border: 2px #ffc107 solid; */
+        }
+
+        #waiting {
+            display: none;
+        }
+
+        label {
+            font-family: 'Segoe UI variable Display';
+            color: #ffc107;
+            font-size: 20px;
+            font-style: bold;
+            /* margin-left: 40px; */
+        }
+
+        #already {
+            color: red;
+            text-decoration: none;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            line-height: 60px;
+            /* width: 500px; */
+            color: lightpink;
+            font-family: 'Segoe UI variable Display';
+            font-size: 18px;
+            border: 1px #ffc107 solid;
+            outline: none;
+            font-style: bold;
+            /* margin-left: 40px; */
+            /* text-align: center; */
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            /* background-color: gold; */
+            /* text-align: center;
+             */
+            color: lightpink;
+            font-family: 'Segoe UI variable Display';
+            font-size: 18px;
+
+        }
+
+        #txtType {
+            color: lightpink;
+            font-family: 'Segoe UI variable Display';
+            font-size: 18px;
+            border: 1px #ffc107 solid;
+        }
+
+        .user {
+            background-image: url(pics/user.png);
+            background-repeat: no-repeat;
+            background-position: center left;
+        }
+
+        .err {
+            float: right;
+        }
+
+        .errL {
+            float: right;
+        }
+
+        #contact {
+            text-align: center;
+            font-size: 50px;
+            font-style: italic;
+            margin-top: 10px;
+            color: whitesmoke;
+            background-color: #ffc107;
+            border: 3px red solid;
+
+        }
+
+        #contact2 {
+            text-align: center;
+            font-size: 50px;
+            font-style: bold;
+            margin-top: 10px;
+            color: whitesmoke;
+            background-color: #ffc107;
+        }
+
+        .ok {
+            background-color: greenyellow;
+            /* border: 5px greenyellow solid; */
+        }
+
+        .not-ok {
+            background-color: red;
+            /* border: 1px red solid; */
+        }
+
+        .ok-pic {
+            background-image: url(pics/ok.png);
+            height: 30px;
+            width: 30px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            margin-top: 7px;
+            /* border: 1px lightgreen; */
+        }
+
+        .not-ok-pic {
+            background-image: url(pics/notok.png);
+            height: 30px;
+            width: 30px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            margin-top: 7px;
+            /* border: 1px lightpink; */
+        }
+
+        #brand {
+            font-family: 'Malgun Gothic';
+        }
+
+        #border {
+            border: 3px red solid;
+        }
+
+        #border2 {
+            border: 3px #ffc107 solid;
+        }
+
+        #border3 {
+            border: 3px whitesmoke solid;
+        }
+
+        #border4 {
+            border-bottom: 3px #ffc107 solid;
+        }
+
+        #italic {
+            font-style: italic;
+            margin-left: 40px;
+            margin-top: -50px;
+        }
+    </style>
+
+
+</head>
+
+<body id="color">
+    <nav class="navbar bg-warning" id="border">
+        <br>
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="style/unnamed.png" id="border3" alt="Bootstrap" width="170" height="150">
+            </a>
+            <nav class="navbar navbar-expand-lg bg-body-danger">
+                <div class="container-fluid">
+                    <a class="navbar-brand" id="contact2" href="#">
+                        <font color="whitesmoke">
+                            <i><b>AUCTIFY.</b></i>
+                        </font>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <form class="d-flex" role="search">
+
+                                <button class="btn btn-outline-warning"><a href="#" data-bs-toggle="modal"
+                                        data-bs-target="#staticBackdrop"
+                                        class="btn btn-outline-danger">Signup.</a></button>
+
+                                <button class="btn btn-outline-warning"><a href="#" data-bs-toggle="modal"
+                                        data-bs-target="#details" class="btn btn-outline-danger">Login.</a></button>
+
+                                <br>
+
+                            </form>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </nav>
+
+    <br><br>
+    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="true" data-interval="1000">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+                aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+                aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+                aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner" id="major">
+            <div class="carousel-item active" id="border">
+                <img src="style/unnamed (16).png" class="d-block w-100" height="900" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <br><br>
+                    <h1>
+                        <font color="grey"><br>ONLINE - AUCTION.</font>
+                    </h1>
+                    <font size="5" color="#ffc107">
+                        <p>Our Online Auction Platform (AUCTIFY) is a place where a person can buy and sell the items of
+                            his/her need without any hassle and in a more secure and reliable way.
+
+                        </p>
+                    </font>
+                </div>
+            </div>
+            <div class="carousel-item" id="border">
+                <img src="style/Pictures-Download-World-Map-Wallpapers-HD.jpg" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h1>Totally Government Certified.</h1>
+                    <font size="5" color="#ffc107">
+                        <p>Our Website is verified by the Government of India ensuring that you can trust us and enjoy
+                            selling and buying the things.
+
+                        </p>
+                    </font>
+                </div>
+            </div>
+            <div class="carousel-item" id="border2">
+                <img src="style/unnamed (62).png" class="d-block w-100" alt="..." height="900">
+                <div class="carousel-caption d-none d-md-block">
+                    <font color="grey">
+                        <h1>24 x 7 Available.</h1>
+                    </font>
+                    <font size="5" color="#ffc107">
+                        <p>Our Platform is 24 x 7 open for our beloved customers so that they can sell and buy items of
+                            their need accordingly at any time and at any time.
+                        </p>
+                    </font>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <br><br>
+
+    <font color="#ffc107">
+
+
+
+
+        <div class="modal fade" id="details" class="details" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" id="color">
+                        <font size="20">
+
+                            <head class="modal-title fs-10" size="10" id="staticBackdropLabel">Login Here.
+                        </font>
+                        <!-- <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1> -->
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="color">
+                        <div id="pic2"></div>
+                        <br>
+                        <hr size="3">
+                        <div class="form-floating mt-5">
+                            <input type="text" class="form-control" id="txtEmailL" value=""
+                                placeholder="Your Email Plz." required>
+                            <!-- <label for="floatingInput">Email-Address</label> -->
+                            <label for="floatingInput" required>Email-Address.</label>
+                            <div id="errEmailL" class="errL" placeholder="Your Email Plz."></div>
+
+                            <br>
+                            <hr>
+                            <br>
+                        </div>
+                        <div class="form-floating mt-3">
+                            <input type="password" class="form-control" id="txtPasswordL" value=""
+                                placeholder="Your Email Plz." required>
+                            <!-- <label for="floatingInput">Password</label> -->
+                            <label for="floatingInput">Password.</label>
+                            <div id="errPasswordL" class="errL"></div>
+                            <br><br>
+
+                        </div>
+                        <div class="modal-footer" id="color">
+                            <center>
+                                <br>
+                                <p>
+                                    <input type="button" id="login" class="btn btn-outline-danger" value="Login.">
+                                    <center>
+                                        <span id="btn-login"></span>
+                                    </center>
+                                    <br>
+                                </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" id="color">
+                        <font size="20">
+
+                            <head class="modal-title fs-10" size="10" id="staticBackdropLabel">Signup Here.
+                        </font>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="color">
+                        <div id="pic"></div>
+                        <br>
+                        <hr size="3">
+                        <div class="form-floating mt-5">
+
+                            <input type="text" class="form-control" id="txtEmail" value="" placeholder="Your Email Plz."
+                                required>
+                            <label for="floatingInput">Email-Address.</label>
+                            <div id="errEmail" class="err"></div>
+                            <!-- <label for="floatingInput">Email-Address</label> -->
+
+                            <!-- <br>
+                            <hr> -->
+                            <br>
+
+                            <center>
+                                <span id="result"></span>
+                            </center>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <center><img id="waiting" src="pics/spinning-arrows.gif" alt=""></img></center>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <!-- <br> -->
+                        <hr size="3">
+                        <br>
+                        <div class="form-floating mt-3">
+                            <input type="password" class="form-control" id="txtPassword" value=""
+                                placeholder="Your Email Plz." required>
+                            <!-- <label for="floatingInput">Password</label> -->
+                            <label for="floatingInput">Password.</label>
+                            <div id="errPassword" class="err"></div>
+                        </div>
+                        <br>
+                        <hr>
+                        </center>
+                        <div class="row">
+                            <div class="col mt-3">
+
+                                <center>
+                                    <label for="floatingInput">Type of User :-</label>
+                                </center>
+                                <select id="txtType" class="form-select mt-3" aria-label="Default select example">
+                                    <font color="lightpink">
+                                        <option selected>Open the Select Menu</option>
+                                        <option value="Seller">Seller</option>
+                                        <option value="Buyer">Buyer</option>
+                                    </font>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- <hr> -->
+                        <br>
+                        <br>
+                        <div class="modal-footer" id="color">
+                            <center>
+                                <br>
+                                <p>
+                                    <input type="button" id="show" class="btn btn-outline-danger" value="Sign-Up.">
+                                    <br><br>
+                                    <center>
+                                        <span id="btn-submit"></span>
+                                    </center>
+                                    <br>
+
+
+                                </p>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </font>
+
+    <div id="contact">Our-Services :-</div>
+    <br>
+    <br>
+
+    <div class="container mb-5" id="cards">
+        <div class="row">
+            <div class="col-md-12 ">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="card" id="border2">
+                            <img src="https://echannelhub.com/wp-content/uploads/2020/04/online-sell.jpg"
+                                class="card-img-top" height="200" width="200" alt="...">
+                            <div class="card-body">
+                                <center>
+                                    <font color="#ffc107" size="5">
+                                        Become Seller of the organisation by selling things and thus increase your
+                                        profit and expanding your business to a next level.
+                                    </font>
+
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                    <br><br>
+
+                    <div class="col-md-3">
+                        <div class="card" id="border">
+                            <img src="https://www.shutterstock.com/image-illustration/bridge-gap-between-buyers-sellers-260nw-707346157.jpg"
+                                height="200" width="200" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <center>
+                                    <font color="lightpink" size="5">
+                                        If you need any thing you can visit our website and provide us a chance in
+                                        order to help you
+                                        We will be very glad if we get a chance to help you.
+                                    </font>
+
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="col-md-3">
+                        <div class="card" id="border2">
+                            <img src="style/download.jpg" height="147" width="230" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <center>
+                                    <font color="#ffc107" size="5">
+                                        This wesite donot promote any items that are  banned by the Govt. of
+                                        India. For More Info. click on the button below!
+                                    </font>
+                                    <br>
+                                    <a href="/terms.html" class="btn btn-outline-danger text-center">Read More.</a>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="col-md-3">
+                        <div class="card" id="border">
+                            <img src="style/user.jpeg" height="199" width="200" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <font color="lightpink" size="5">
+                                    Our Organisation is totally User - Friendly and thus can be accessed by anyone of
+                                    any age group in order to sell and buy any item.
+                                </font>
+                            </div>
+                        </div>
+                    </div>
+                    <br><br>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="contact">Developed-By :-</div>
+    <br>
+    <br>
+    <font color="lightpink" size="5">
+        <div class="row row-cols-1 row-cols-md-2 g-4 md-4 mb-5">
+            <div class="col" id="develop">
+                <div class="card mb-6" id="border2">
+                    <center>
+                        <img src="style/Chitkara.jpg" class="mt-4" id="border" height="210" width="300" alt="...">
+
+                        <br><br>
+                        <div class="card-body">
+                            <h2 class="card-title">
+                                <font color="#ffc107">Developed By :-</font><br><br> Sachin Goyal (2310991035). <br>
+                                Pankit Sheoran (2310991007). <br> Satwik Sharma (2310991045). <br> Vishwas Chaurasia
+                                (2310992482).
+                                </h3>
+                                <br>
+                                <!-- <p class="card-text">
+                                <font color="#ffc107">University :-</font> Chitkara University.
+                            </p>
+                            <p class="card-text">
+                                <font color="#ffc107">Branch :-</font> Computer Science Engineering.
+                            </p>
+                            <p class="card-text">
+                                <font color="#ffc107">Semester :-</font> 3rd Semester.
+                            </p>
+                            <br> -->
+                        </div>
+                </div>
+                </center>
+            </div>
+
+            <div class="col">
+                <div class="card mb-4" id="border">
+
+                    <center><img src="style/Chitkara.jpg" class="mt-4" id="border2" height="203" width="300">
+                        <br><br>
+                        <div class="card-body">
+                            <h1 class="card-title">
+                                <font color="#ffc107">Under the Guidance of :-</font><br>Dr. Aakash.
+                            </h1>
+                            <br>
+                            <p class="card-text">
+                                <font color="#ffc107">Institute :-</font> Chitkara University, Rajpura.
+                            </p>
+                            <p class="card-text">
+                                <font color="#ffc107"> &#x260F; :-</font> 9872246056.
+                            </p>
+                            <br>
+                        </div>
+
+                    </center>
+                </div>
+            </div>
+        </div>
+    </font>
+
+    <font color="whitesmoke">
+        <footer id="border">
+            <div class="container-md-12 bg-warning">
+                <div class="row bg-warning">
+                    <div class="col-md-3">
+                        <a href="index.html">&nbsp;&nbsp;&nbsp;&nbsp;<img src="style/unnamed.png" height="200" alt=""
+                                class="img-fluid logo-footer mt-4" id="border3" height="180" width="290"></a><br><br>
+                        <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div id="italic">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AUCTIFY.</div>
+                            </h2>
+                            <div class="footer-about">
+                            </div>
+
+                    </div>
+                    <div class="col-md-3">
+                        <div class="useful-link">
+                            <br>
+                            <h2>Useful Links.</h2>
+                            <img src="./assets/images/about/home_line.png" alt="" class="img-fluid">
+                            <div class="use-links">
+                                <br>
+                                <li><a href="/index.html"><i class="fa-solid fa-angles-right"></i>Home :-.</a></li><br>
+                                <li><a href="#major"><i class="fa-solid fa-angles-right"></i>About-Us :-.</a></li><br>
+                                <li><a href="#cards"><i class="fa-solid fa-angles-right"></i>Our-Services:-.</a></li>
+                                <br>
+                                <li><a href="#develop"><i class="fa-solid fa-angles-right"></i>Developer :-.</a></li>
+                                <br>
+                                <li><a href="terms.html"><i class="fa-solid fa-angles-right"></i>Terms & Conditions
+                                        :-</a>
+                                </li>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-3">
+                        <div class="social-links"><br>
+                            <h2>Follow Us.</h2>
+                            <img src="./assets/images/about/home_line.png" alt="">
+                            <div class="social-icons">
+                                <!-- <img src="pics/fb.png" background-color="white" height="50" width="50">
+                                        <img src="pics/insta.jpg" height="50" width="50" margin-left="10">
+                                        <img src="pics/whatsapp.webp" height="50" width="50" margin-left="10"> -->
+                                <ul class="social-icon">
+                                    <br>
+                                    <li class="social-icon__item"><a class="social-icon__link"
+                                            href="https://www.facebook.com/">
+                                            <ion-icon name="logo-facebook"></ion-icon>
+                                        </a></li>
+                                    <br>
+                                    <li class="social-icon__item"><a class="social-icon__link"
+                                            href="https://x.com/?lang=hi">
+                                            <ion-icon name="logo-twitter"></ion-icon>
+                                        </a></li>
+                                    <br>
+                                    <li class="social-icon__item"><a class="social-icon__link"
+                                            href="https://in.linkedin.com/">
+                                            <ion-icon name="logo-linkedin"></ion-icon>
+                                        </a></li>
+                                    <br>
+                                    <li class="social-icon__item"><a class="social-icon__link"
+                                            href="https://www.instagram.com/">
+                                            <ion-icon name="logo-instagram"></ion-icon>
+                                        </a></li>
+                                </ul>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="col-md-3">
+                        <div class="address">
+                            <br>
+                            <h2>Visit-Us.</h2>
+                            <img src="./assets/images/about/home_line.png" alt="" class="img-fluid">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3447.8805713513743!2d74.9501394145977!3d30.211955917595876!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391732a4f07278a9%3A0x4a0d6293513f98ce!2sBanglore%20Computer%20Education!5e0!3m2!1sen!2sin!4v1675927360081!5m2!1sen!2sin"
+                                height="300" width="300" id="border" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade" allowfullscreen=""></iframe>
+                        </div>
+                    </div>
+                    <marquee marquee width="60%" direction="left" scrollamount="">
+                        <font size="5" color="white" bgcolor="bg-warning">
+                            <i><u>Thanks for Visiting the Website Visit Again.</u></i><b>&nbsp;&nbsp;&nbsp;&nbsp;JAI HIND!</b>
+                        </font>
+                    </marquee>
+
+                </div>
+            </div>
+
+        </footer>
+        <section id="copy-right">
+            <div class="copy-right-sec" id="copy-right"><i class="fa-solid fa-copyright"></i>
+                <br><br>
+                <!-- <center> -->
+                <font color="black" id="copy">All Copy-Right Reserved. &#xA9; </font><a href="#"></a>
+                <!-- </center> -->
+
+            </div>
+
+        </section>
+    </font>
+</body>
+
+</html>
+
+
+
+</font>
+
+
+<font color="#ffc107">
+
+</font>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,227 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Update Result Panel.</title>
+    <link rel="icon" type="image/x-icon" href="style/unnamed.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+
+    <style>
+        #color {
+            background-color: whitesmoke;
+        }
+
+        body {
+            background: linear-gradient(to right, whitesmoke, whitesmoke, #ffc107);
+        }
+
+        .btn {
+            width: 150px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 25px 25px 25px 25px;
+            transition: ease all .5s;
+            margin-right: 10px;
+            font-family: 'Segoe UI variable Display';
+        }
+
+        #btn2 {
+            width: 50px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 25px 25px 25px 25px;
+            transition: ease all .5s;
+            margin-right: 10px;
+            font-family: 'Segoe UI variable Display';
+        }
+
+        #pic {
+            background-image: url(style/95ab9d3dd7ac388e4caa8e6a836ac5d6.gif);
+            height: 150px;
+            width: 150px;
+            background-size: contain;
+            margin: auto;
+            margin-top: 10px;
+            background-repeat: no-repeat;
+        }
+
+        #pic2 {
+            background-image: url(style/14591dbbc4c695fd1177eba45bfabdc4.gif);
+            height: 150px;
+            width: 150px;
+            background-size: contain;
+            margin: auto;
+            margin-top: 10px;
+            background-repeat: no-repeat;
+        }
+
+        #waiting {
+            display: none;
+        }
+
+        label {
+            font-family: 'Segoe UI variable Display';
+            color: #ffc107;
+            font-size: 20px;
+            font-style: bold;
+        }
+
+
+        input[type="text"],
+        input[type="password"] {
+            line-height: 60px;
+            /* width: 500px; */
+            color: lightpink;
+            font-family: 'Segoe UI variable Display';
+            font-size: 18px;
+            border: 1px #ffc107 solid;
+            outline: none;
+            font-style: bold;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            color: lightpink;
+            font-family: 'Segoe UI variable Display';
+            font-size: 18px;
+
+        }
+
+        #txtType {
+            color: lightpink;
+            font-family: 'Segoe UI variable Display';
+            font-size: 18px;
+            border: 1px #ffc107 solid;
+        }
+
+        #txttable {
+            font-family: 'Segoe UI variable Display';
+            font-size: 18px;
+            border: 1px #ffc107 solid;
+        }
+
+        .user {
+            background-image: url(pics/user.png);
+            background-repeat: no-repeat;
+            background-position: center left;
+        }
+
+        .err {
+            float: right;
+        }
+
+        .errL {
+            float: right;
+        }
+
+        .ok {
+            background-color: greenyellow;
+        }
+
+        .not-ok {
+            background-color: red;
+        }
+
+        .ok-pic {
+            background-image: url(pics/ok.png);
+            height: 30px;
+            width: 30px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            margin-top: 7px;
+        }
+
+        .not-ok-pic {
+            background-image: url(pics/notok.png);
+            height: 30px;
+            width: 30px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            margin-top: 7px;
+        }
+
+        #brand {
+            font-family: 'Malgun Gothic';
+        }
+
+        #border2 {
+            border: 3px red solid;
+        }
+
+        #border3 {
+            border: 3px whitesmoke solid;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #ffc107;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar bg-warning" id=border2>
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="style/unnamed.png" id="border3" alt="Bootstrap" width="170"
+                    height="150">
+            </a>
+            <nav class="navbar navbar-expand-lg bg-body-danger">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">
+                        <font color="whitesmoke" size="20">
+                            Update - Result Panel.
+                        </font>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <form class="d-flex" role="search">
+                            </form>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </nav>
+    <center>
+        <div class="card text">
+            <!-- <img src="style/shark logo2.png" class="card-img" alt="..."> -->
+            <div class="card-img-overlay">
+                <font color="#ffc107">
+                    <center>
+                        <font color="red"><h1><i><u>You have been Updated successfully.<br>Congratulations.</u></i></h1></font>
+                        <br><br>
+                        <p>
+                            <!-- <a href="/dash-donor.html">Go Back.</a> -->
+                            <a href="/dash-donor.html" class="btn btn-outline-danger text-center" id="logout">Go Back.</a>
+                        </p>
+
+                        </form>
+            </div>
+        </div>
+    </center>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+</body>
+
+</font>
+</div>
+</div>
+</center>
+
+</html>

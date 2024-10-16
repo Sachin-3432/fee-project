@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Document.</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+    <script>
+        function doPrev(refFile, prevImg) {
+            const [file] = refFile.files;
+            if (file) {
+                prevImg.src = URL.createObjectURL(file);
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <center>
+        <p>
+        <h1><i><u>Signup Here</u></i></h1>
+        </p>
+
+        <div class="container">
+            <div class="row">
+                <form action="/signup-process">
+                    <div class="col-md-8 offset-md-2">
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" name="txtEmail" value="sg968668@gmail.com">
+                            <label for="floatingInput">Email Address</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" name="txtPassword" value="tufly2012">
+                            <label for="floatingInput">Password</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" name="txtMobile" value="79866-81937">
+                            <label for="floatingInput">Mobile-Number</label>
+                        </div>
+                        <hr>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input mt-5" type="radio" name="occupation" value="Business">
+                            <label class="form-check-label mt-5" for="flexRadioDefault2">
+                                Business
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input mt-5" type="radio" name="occupation" value="Job">
+                            <label class="form-check-label mt-5" for="flexRadioDefault2">
+                                Job
+                            </label>
+                        </div>
+                        <p>
+                            <hr>
+                            Your Tech Knowledge.
+                            <br>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input mt-5" type="checkbox" name="chkJava" value="Java">
+                            <label class="form-check-label mt-5" for="inlineCheckbox1">
+                                Core Java
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input mt-5" type="checkbox" name="chkWeb"
+                                value="Full Stack Web Development">
+                            <label class="form-check-label mt-5" for="inlineCheckBox2">
+                                Full Stack Web Development.
+                            </label>
+                        </div>
+                        </p>
+                        <hr>
+                        <p>
+                        <div class="form-floating mb-3">
+                            <input type="date" class="form-control" name="txtDate" value="">
+                            <label for="floatingInput">Date of Birth</label>
+                        </div>
+                        </p>
+                        <hr>
+                        <center>
+                            <input type="submit" value="Signup-Here" class="btn btn-outline-warning mt-2">
+                        </center>
+                        <hr>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </center>
+    <center>
+        <h1><u><i>Signup Here with Hidden Data</i></u></h1>
+        <div class="container">
+            <div class="row">
+                <form class="row" action="/signup-process-post" method="post" enctype="multipart/form-data">
+                    <div class="col-md-8 offset-md-2">
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" name="txtEmail" value="sg968668@gmail.com">
+                            <label for="floatingInput">Email Address</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" name="txtPassword" value="tufly2012">
+                            <label for="floatingInput">Password</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="mobile" class="form-control" name="txtMobile" value="7986681937">
+                            <label for="floatingInput">Mobile-Number</label>
+                        </div>
+                        <hr>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input mt-5" type="radio" name="occupation" value="Business">
+                            <label class="form-check-label mt-5" for="flexRadioDefault2">
+                                Business
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input mt-5" type="radio" name="occupation" value="Job">
+                            <label class="form-check-label mt-5" for="flexRadioDefault2">
+                                Job
+                            </label>
+                        </div>
+                        <hr>
+                        <p>
+                            Your Tech Knowledge
+                            <br>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="chkJava" value="Java">
+                            <label class="form-check-label" for="inlineCheckbox1">
+                                Core Java
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="chkWeb"
+                                value="Full Stack Web Development">
+                            <label class="form-check-label" for="inlineCheckBox2">
+                                Full Stack Web Development
+                            </label>
+                        </div>
+                        </p>
+                        <hr>
+                        <p>
+                        <div class="form-floating mb-3">
+                            <input type="date" class="form-control" name="txtDate" value="">
+                            <label for="floatingInput">Date of Birth</label>
+                        </div>
+                        </p>
+                        <hr>
+                        <p class="mt-5">
+                            Upload Ur Profile Pic:
+                            <br>
+                            <br>
+                            <input type="file" name="profilePic" id="ppic" onchange="doPrev(ppic,prev);">
+                        </p>
+                        <p>
+                            <img id="prev" height="100" width="100">
+                        </p>
+                        <p>
+                        <div class="row">
+                            <div class="col">
+                                Residing State.
+                                <select name="comboState" class="form-select mt-2" aria-label="Default select example">
+                                    <option selected>Open the Select Menu</option>
+                                    <option value="Rajasthan">Rajasthan</option>
+                                    <option value="Gujarat">Gujarat</option>
+                                    <option value="Madhya-Pradesh">Madhya-Pradesh</option>
+                                    <option value="Chattisgarh">Chattisgarh</option>
+                                </select>
+                            </div>
+                        </div>
+                        </p>
+
+                        <p>
+                        <div class="row">
+                            <div class="col">
+                                Cities you Visited.
+                                <select name="cities" size="2" multiple class="form-select mt-2">
+                                    <option value="Bikaner">Bikaner</option>
+                                    <option value="Dwaraka">Dwaraka</option>
+                                    <option value="Satpura">Satpura</option>
+                                    <option value="Dandkaranya">Dandkaranya</option>
+                                </select>
+                            </div>
+                        </div>
+                        </p>
+                        <center>
+                            <input type="submit" value="Signup-Here" class="btn btn-outline-warning mt-2">
+                        </center>
+                        <hr>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </center>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
