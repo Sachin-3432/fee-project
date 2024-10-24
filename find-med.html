@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Find Sellers Panel.</title>
+    <title>Find Products Panel.</title>
     <script src="script/angular.min.js"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -35,6 +35,53 @@
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+    <script>
+        function doPrev(refFile, prevImg) {
+            const [file] = refFile.files
+            if (file) {
+                prevImg.src = URL.createObjectURL(file)
+            }
+        }
+        $(document).ready(function () {
+            $("#showing").click(function () {
+                var emailKu = $("#txtEmail").val();
+                var nameKu = $("#txtName").val();
+                var productKu = $("#txtProduct").val();
+                var cityKu = $("#txtCity").val();
+                var mobileKu = $("#txtMob").val();
+                var bidKu = $("#txtBid").val();
+
+                var obj = {
+                    type: "get",
+                    url: "/chk-bid",
+                    data: {
+                        kuchemail: emailKu,
+                        kuchname: nameKu,
+                        kuchproduct: productKu,
+                        kuchcity: cityKu,
+                        kuchmobile: mobileKu,
+                        kuchbid: bidKu
+                    }
+                }
+
+                $.ajax(obj).done(function (respkuch1) {
+                    $("#btn-bid").html(respkuch1);
+                }).fail(function (errkuch1) {
+                    // alert(kuchErr.toString());
+                    $("#btn-bid").html(errkuch1);
+                });
+            });
+
+            function setActiveUser() {
+                var au = localStorage.getItem("activeKuch");
+                $("#txtEmail").val(au).prop("readonly", true);
+            }
+
+            setActiveUser();
+
+        });
+    </script>
 
     <style>
         #color {
@@ -96,27 +143,55 @@
 
 
         input[type="text"],
-        input[type="password"] {
-            line-height: 60px;
+        input[type="password"],
+        input[type="date"],
+        input[type="file"],
+        input[type="email"],
+        input[type="number"],
+        input[type="time"] {
+            /* line-height: 40px; */
             /* width: 500px; */
-            color: lightpink;
+            color: tomato;
             font-family: 'Segoe UI variable Display';
             font-size: 18px;
             border: 1px #ffc107 solid;
             outline: none;
             font-style: bold;
+            /* margin-left: 40px; */
+            /* text-align: center; */
         }
 
+        input[type="email"]:focus,
         input[type="text"]:focus,
-        input[type="password"]:focus {
-            color: lightpink;
+        input[type="password"]:focus,
+        input[type="date"]:focus,
+        input[type="number"]:focus,
+        input[type="email"]:focus,
+        input[type="time"]:focus,
+        input[type="file"]:focus {
+            /* background-color: gold; */
+            /* text-align: center;
+             */
+            color: tomato;
             font-family: 'Segoe UI variable Display';
             font-size: 18px;
 
         }
 
         #txtType {
-            color: lightpink;
+            color: tomato;
+            font-family: 'Segoe UI variable Display';
+            font-size: 20px;
+            border: 1px #ffc107 solid;
+            background-color: whitesmoke;
+            height: 40px;
+            width: 300px;
+            /* background-color: whitesmoke; */
+        }
+
+
+        #txtType2 {
+            color: tomato;
             font-family: 'Segoe UI variable Display';
             font-size: 20px;
             border: 1px #ffc107 solid;
@@ -159,6 +234,10 @@
             background-size: contain;
             background-repeat: no-repeat;
             margin-top: 7px;
+        }
+
+        #prev {
+            margin-top: 10px;
         }
 
         .not-ok-pic {
@@ -277,6 +356,7 @@
             $scope.doShowOne = function (selIndex) {
                 $scope.selOneObj = $scope.JsonArr3[selIndex];
             }
+
         })
     </script>
 
@@ -290,7 +370,7 @@
                 <div class="container-fluid">
                     <a class="navbar-brand" href="#">
                         <font color="whitesmoke" size="20">
-                            Find Sellers Panel.</font>
+                            Find Products Panel.</font>
 
                     </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -330,20 +410,25 @@
             <br><br>
             <hr>
 
-            <input type="button" value="Fetch Sellers" class="btn btn-outline-danger" ng-click="fetchDonors();">
+            <input type="button" value="Fetch Products." class="btn btn-outline-danger" ng-click="fetchDonors();">
+            <a href="#" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                ng-click="doShowOne($index);">Enter Bid.</a>
             <br>
             <hr>
         </font>
     </center>
 
-    <font color="lightpink">
+    <font color="tomato">
         <div class="container mt-5">
             <div class="row">
                 <div class="col-md-3" ng-repeat="obj in JsonArr3">
                     <div class="card" id="border4">
                         <!-- <img src="uploads/{{obj.ppic}}" class="card-img-top" alt="..."> -->
-                        <center> <img src="style/unnamed (5).png" width="150" height="150" class="card mt-2" alt="...">
-                            <div class="card-body mt-2" id="txtType">
+                        <center>
+                            <td align="center">
+                                <img src="uploads/{{obj.pic}}" height="100" width="100" mt="2" id="prev">
+                            </td>
+                            <div class="card-body mt-2" id="txtType2">
                                 <h5 class="card-text">
                                     <font color="#ffc107">Seller Name :- </font>{{obj.name}}.
                                 </h5>
@@ -360,7 +445,7 @@
                                     <font color="#ffc107">Asked Price :- </font>{{obj.price}}.
                                 </p>
                                 <a href="#" class="btn btn-outline-danger" data-bs-toggle="modal"
-                                    data-bs-target="#modalDetails" ng-click="doShowOne($index);">More Details</a>
+                                    data-bs-target="#modalDetails" ng-click="doShowOne($index);">More Details.</a>
                         </center>
                     </div>
                 </div>
@@ -385,7 +470,7 @@
                             </font>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body" id="txtType">
+                        <div class="modal-body" id="txtType2">
                             <p><img src="uploads/{{selOneObj.pic}}" width="100" height="100"></p>
                             <p class="modal-text">
                                 <font color="#ffc107">Email ID :- </font>{{selOneObj.email}}.<br>
@@ -404,15 +489,88 @@
                                 hrs-{{selOneObj.bhours}} hrs.<br>
                         </div>
                         <div class="modal-footer" id="color">
-                            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
 
+                            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close.</button>
                         </div>
+                        <!-- <hr> -->
+                        <!-- <div class="modal-footer" id="color">
+                          
+                        </div> -->
                     </div>
                 </div>
             </div>
         </font>
 
     </center>
+    <center>
+        <font color="#ffc107">
+            <!-- Button trigger modal -->
+            <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    Launch static backdrop modal
+  </button> -->
+
+            <!-- Modal -->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                                <h1>Enter Bid Value.</h1>
+                            </h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" name="txtEmail" id="txtEmail" value=""
+                                    placeholder="Your Email Plz." required readonly>
+                                <label for="floatingInput">Email Address</label>
+                            </div>
+                            <hr>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" name="txtName" id="txtName" value=""
+                                    placeholder="Your Email Plz." required>
+                                <label for="floatingInput">Your Name</label>
+                            </div>
+                            <hr>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" name="txtProduct" id="txtProduct" value=""
+                                    placeholder="Your Email Plz." required>
+                                <label for="floatingInput">Product Name</label>
+                            </div>
+                            <hr>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" name="txtCity" id="txtCity" value=""
+                                    placeholder="Your Email Plz." required>
+                                <label for="floatingInput">Your City</label>
+                            </div>
+                            <hr>
+                            <div class="form-floating mb-3">
+                                <input type="number" class="form-control" name="txtMob" id="txtMob" value=""
+                                    placeholder="Your Email Plz." required>
+                                <label for="floatingInput">Mobile Number</label>
+                            </div>
+                            <hr>
+                            <div class="form-floating mb-3">
+                                <input type="number" class="form-control" name="txtBid" id="txtBid" value=""
+                                    placeholder="Your Email Plz." required>
+                                <label for="floatingInput">Enter Bid</label>
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="button" id="showing" class="btn btn-outline-danger" value="Submit">
+                            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                            <center>
+                                <br><br><br>
+                                <span id="btn-bid"></span>
+                                <br><br><br>
+                            </center>
+                            <!-- <button type="button" class="btn btn-primary">Understood</button> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
 </body>
